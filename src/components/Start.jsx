@@ -13,12 +13,12 @@ export default function Start({ setUsername }) {
         <h1>React Trivia app</h1>
         <p>How knowledgeable are you in sport? Enter to find out</p>
       </div>
-
       <input
         className="startInput"
         placeholder="enter your name"
         ref={inputRef}
-      />
+      />{" "}
+      <br />
       <button className="startButton" onClick={handleClick}>
         Start
       </button>
