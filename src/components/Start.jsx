@@ -9,6 +9,11 @@ export default function Start({ setUsername }) {
 
   return (
     <div className="start">
+      <div className="descrip">
+        <h1>React Trivia app</h1>
+        <p>How knowledgeable are you in sport? Enter to find out</p>
+      </div>
+
       <input
         className="startInput"
         placeholder="enter your name"
