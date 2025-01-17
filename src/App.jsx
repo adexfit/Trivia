@@ -3,87 +3,65 @@ import { useEffect, useMemo, useState } from "react";
 import Start from "./components/Start";
 import Timer from "./components/Timer";
 import Trivia from "./components/Trivia";
+import Testin from "./components/Testin";
 
 function App() {
   const [username, setUsername] = useState(null);
   const [timeOut, setTimeOut] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [earned, setEarned] = useState("$ 0");
+  const [apiQuestion, setApiQuestion] = useState({});
 
+  // useEffect(() => {
+  //   fetch("https://opentdb.com/api.php?amount=15&category=21&type=multiple")
+  //     .then((res) => res.json())
+  //     .then((data) => setApiQuestion(data))
+  //     .catch((error) => console.error(error));
+  // }, []);
+
+  let str = "https://jsonplaceholder.typicode.com/posts?_limit=10";
+  let str2 = "https://opentdb.com/api.php?amount=15&type=multiple";
+
+  //fetch data
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=15&type=multiple")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    let str2 = "https://opentdb.com/api.php?amount=15&type=multiple";
+    const fetchQuestions = async () => {
+      const response = await fetch(str2);
+      const data = await response.json();
+      setApiQuestion(data.results);
+    };
+
+    fetchQuestions();
   }, []);
 
-  const data = [
-    {
-      id: 1,
-      question: "Rolex is a company that specializes in what type of product?",
-      answers: [
-        {
-          text: "Phone",
+  //transformed fetched data
+  useEffect(() => {
+    let optionArray = [];
+    let generalArray = [];
+
+    for (let i = 0; i < apiQuestion.length; i++) {
+      let iteratedQuestion = apiQuestion[i]?.question;
+      let iteratedAnswer = apiQuestion[i]?.correct_answer;
+      let wronganswers = apiQuestion[i].incorrect_answers;
+
+      let choice = [];
+      for (const x of wronganswers) {
+        choice.push({
+          text: x,
           correct: false,
-        },
-        {
-          text: "Watches",
-          correct: true,
-        },
-        {
-          text: "Food",
-          correct: false,
-        },
-        {
-          text: "Cosmetic",
-          correct: false,
-        },
-      ],
-    },
-    {
-      id: 2,
-      question: "When did the website `Facebook` launch?",
-      answers: [
-        {
-          text: "2004",
-          correct: true,
-        },
-        {
-          text: "2005",
-          correct: false,
-        },
-        {
-          text: "2006",
-          correct: false,
-        },
-        {
-          text: "2007",
-          correct: false,
-        },
-      ],
-    },
-    {
-      id: 3,
-      question: "Who played the character of harry potter in movie?",
-      answers: [
-        {
-          text: "Johnny Deep",
-          correct: false,
-        },
-        {
-          text: "Leonardo Di Caprio",
-          correct: false,
-        },
-        {
-          text: "Denzel Washington",
-          correct: false,
-        },
-        {
-          text: "Daniel Red Cliff",
-          correct: true,
-        },
-      ],
-    },
-  ];
+        });
+      }
+      let item = {
+        id: `${i}`,
+        question: `${iteratedQuestion}`,
+        answers: [...choice, { text: iteratedAnswer, correct: true }],
+      };
+
+      generalArray.push(item);
+    }
+
+    console.log(generalArray);
+  });
 
   const moneyPyramid = useMemo(
     () =>
@@ -113,54 +91,57 @@ function App() {
   }, [questionNumber, moneyPyramid]);
 
   return (
-    <div className="app">
-      {!username ? (
-        <Start setUsername={setUsername} />
-      ) : (
-        <>
-          <div className="main">
-            {timeOut ? (
-              <h1 className="endText">You earned: {earned}</h1>
-            ) : (
-              <>
-                <div className="top">
-                  <div className="timer">
-                    <Timer
-                      setTimeOut={setTimeOut}
-                      questionNumber={questionNumber}
-                    />
-                  </div>
-                </div>
-                <div className="bottom">
-                  <Trivia
-                    data={data}
-                    questionNumber={questionNumber}
-                    setQuestionNumber={setQuestionNumber}
-                    setTimeOut={setTimeOut}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <div className="pyramid">
-            <ul className="moneyList">
-              {moneyPyramid.map((m) => (
-                <li
-                  className={
-                    questionNumber === m.id
-                      ? "moneyListItem active"
-                      : "moneyListItem"
-                  }
-                >
-                  <span className="moneyListItemNumber">{m.id}</span>
-                  <span className="moneyListItemAmount">{m.amount}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
-    </div>
+    <div>We are troubleshooting our app</div>
+
+    //   <div className="app">
+    //     {!username ? (
+    //       <Start setUsername={setUsername} />
+    //     ) : (
+    //       <>
+    //         <div className="main">
+    //           {timeOut ? (
+    //             <h1 className="endText">You earned: {earned}</h1>
+    //           ) : (
+    //             <>
+    //               <div className="top">
+    //                 <div className="timer">
+    //                   <Timer
+    //                     setTimeOut={setTimeOut}
+    //                     questionNumber={questionNumber}
+    //                   />
+    //                 </div>
+    //               </div>
+    //               <div className="bottom">
+    //                 <Trivia
+    //                   data={data}
+    //                   questionNumber={questionNumber}
+    //                   setQuestionNumber={setQuestionNumber}
+    //                   setTimeOut={setTimeOut}
+    //                   ourQuestion={apiQuestion}
+    //                 />
+    //               </div>
+    //             </>
+    //           )}
+    //         </div>
+    //         <div className="pyramid">
+    //           <ul className="moneyList">
+    //             {moneyPyramid.map((m) => (
+    //               <li
+    //                 className={
+    //                   questionNumber === m.id
+    //                     ? "moneyListItem active"
+    //                     : "moneyListItem"
+    //                 }
+    //               >
+    //                 <span className="moneyListItemNumber">{m.id}</span>
+    //                 <span className="moneyListItemAmount">{m.amount}</span>
+    //               </li>
+    //             ))}
+    //           </ul>
+    //         </div>
+    //       </>
+    //     )}
+    //   </div>
   );
 }
 

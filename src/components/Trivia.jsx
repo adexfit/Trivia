@@ -9,6 +9,7 @@ export default function Trivia({
   questionNumber,
   setQuestionNumber,
   setTimeOut,
+  onlineQuestion,
 }) {
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);

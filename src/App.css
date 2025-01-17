@@ -2,13 +2,15 @@
   height: 100vh;
   display: flex;
   color: white;
-  background-color: #020230;
+  /* background-color: #020230;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
+    url("../src/assets/bg.jpg") center; */
 }
 
 .main {
   width: 75%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
-    url("https://i.ytimg.com/vi/yQbJRGs0fy8/maxresdefault.jpg") center;
+    url("../src/assets/bg.jpg") center;
   display: flex;
   flex-direction: column;
 }
@@ -177,25 +179,27 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  background-color: rgb(236, 236, 255);
+  background-color: rgb(240, 240, 240);
+  text-align: center;
+}
+
+.start h1 {
   color: #2600b1;
-  /* justify-content: center; */
-  /* top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; */
+}
+
+.start p {
+  color: #050111;
 }
 
 .startInput {
   width: 100%;
   height: 30px;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
   font-size: 18px;
-  padding: 4px 6px;
-  background-color: #e8dbff;
+  padding: 4px 0px;
+  /* background-color: #ccc; */
 }
 
 .startInput:focus {
@@ -213,4 +217,16 @@
   padding: 12px 12px;
   background-color: #2600b1;
   color: beige;
+}
+
+.testing {
+  /* background-color: rgb(15, 5, 70); */
+  color: #140101;
+  /* max-width: 500px; */
+  display: grid;
+}
+
+pre {
+  width: 100%;
+  text-wrap: wrap;
 }
