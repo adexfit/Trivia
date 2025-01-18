@@ -11,16 +11,10 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [earned, setEarned] = useState("$ 0");
   const [apiQuestion, setApiQuestion] = useState({});
+  const [transQuestion, setTransQuestion] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("https://opentdb.com/api.php?amount=15&category=21&type=multiple")
-  //     .then((res) => res.json())
-  //     .then((data) => setApiQuestion(data))
-  //     .catch((error) => console.error(error));
-  // }, []);
-
-  let str = "https://jsonplaceholder.typicode.com/posts?_limit=10";
-  let str2 = "https://opentdb.com/api.php?amount=15&type=multiple";
+  // let str = "https://jsonplaceholder.typicode.com/posts?_limit=10";
+  // let str2 = "https://opentdb.com/api.php?amount=15&type=multiple";
 
   //fetch data
   useEffect(() => {
@@ -36,7 +30,6 @@ function App() {
 
   //transformed fetched data
   useEffect(() => {
-    let optionArray = [];
     let generalArray = [];
 
     for (let i = 0; i < apiQuestion.length; i++) {
@@ -51,17 +44,30 @@ function App() {
           correct: false,
         });
       }
+
+      //shuffled options so answers won't always be at the same position
+      let unshuffledOptions = [
+        ...choice,
+        { text: iteratedAnswer, correct: true },
+      ];
+
+      let shuffledOptions = unshuffledOptions
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+
+      // Add each questions
       let item = {
         id: `${i}`,
         question: `${iteratedQuestion}`,
-        answers: [...choice, { text: iteratedAnswer, correct: true }],
+        answers: shuffledOptions,
       };
 
       generalArray.push(item);
     }
 
-    console.log(generalArray);
-  });
+    setTransQuestion(generalArray);
+  }, []);
 
   const moneyPyramid = useMemo(
     () =>
@@ -91,57 +97,61 @@ function App() {
   }, [questionNumber, moneyPyramid]);
 
   return (
-    <div>We are troubleshooting our app</div>
+    // <div>We are troubleshooting our app</div>
 
-    //   <div className="app">
-    //     {!username ? (
-    //       <Start setUsername={setUsername} />
-    //     ) : (
-    //       <>
-    //         <div className="main">
-    //           {timeOut ? (
-    //             <h1 className="endText">You earned: {earned}</h1>
-    //           ) : (
-    //             <>
-    //               <div className="top">
-    //                 <div className="timer">
-    //                   <Timer
-    //                     setTimeOut={setTimeOut}
-    //                     questionNumber={questionNumber}
-    //                   />
-    //                 </div>
-    //               </div>
-    //               <div className="bottom">
-    //                 <Trivia
-    //                   data={data}
-    //                   questionNumber={questionNumber}
-    //                   setQuestionNumber={setQuestionNumber}
-    //                   setTimeOut={setTimeOut}
-    //                   ourQuestion={apiQuestion}
-    //                 />
-    //               </div>
-    //             </>
-    //           )}
-    //         </div>
-    //         <div className="pyramid">
-    //           <ul className="moneyList">
-    //             {moneyPyramid.map((m) => (
-    //               <li
-    //                 className={
-    //                   questionNumber === m.id
-    //                     ? "moneyListItem active"
-    //                     : "moneyListItem"
-    //                 }
-    //               >
-    //                 <span className="moneyListItemNumber">{m.id}</span>
-    //                 <span className="moneyListItemAmount">{m.amount}</span>
-    //               </li>
-    //             ))}
-    //           </ul>
-    //         </div>
-    //       </>
-    //     )}
-    //   </div>
+    <div className="app">
+      {!username ? (
+        <Start setUsername={setUsername} />
+      ) : transQuestion?.length < 1 ? (
+        <Testin />
+      ) : (
+        <>
+          <div className="main">
+            {timeOut ? (
+              <>
+                <h1 className="endText">You earned: {earned}</h1>
+                <button>Play Again</button>
+              </>
+            ) : (
+              <>
+                <div className="top">
+                  <div className="timer">
+                    <Timer
+                      setTimeOut={setTimeOut}
+                      questionNumber={questionNumber}
+                    />
+                  </div>
+                </div>
+                <div className="bottom">
+                  <Trivia
+                    data={transQuestion}
+                    questionNumber={questionNumber}
+                    setQuestionNumber={setQuestionNumber}
+                    setTimeOut={setTimeOut}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+          <div className="pyramid">
+            <ul className="moneyList">
+              {moneyPyramid.map((m) => (
+                <li
+                  className={
+                    questionNumber === m.id
+                      ? "moneyListItem active"
+                      : "moneyListItem"
+                  }
+                >
+                  <span className="moneyListItemNumber">{m.id}</span>
+                  <span className="moneyListItemAmount">{m.amount}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

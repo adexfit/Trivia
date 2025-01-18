@@ -9,24 +9,6 @@ export default function Start({ setUsername }) {
   };
 
   return (
-    // <div className="testing">
-    //   {/* <pre className="texto">{JSON.stringify(onlineQuestion[1])}</pre> */}
-    //   {/* <pre className="texto">
-    //     Question only:
-    //     {JSON.stringify(onlineQuestion[1]?.question.text)}
-    //   </pre>
-
-    //   <pre className="texto">
-    //     incorrect answers:
-    //     {JSON.stringify(onlineQuestion[1]?.incorrectAnswers)}
-    //   </pre>
-    //   <pre className="texto">
-    //     correct answer:
-    //     {JSON.stringify(onlineQuestion[1]?.correctAnswer)}
-    //   </pre> */}
-    //   <div>{variable}</div>
-    // </div>
-
     <div className="start">
       <div className="trivia">
         <div className="descrip">
