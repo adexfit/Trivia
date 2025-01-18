@@ -1,4 +1,4 @@
-const data = [
+export const data = [
   {
     id: 1,
     question: "Rolex is a company that specializes in what type of product?",
