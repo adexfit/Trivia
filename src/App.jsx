@@ -32,25 +32,36 @@ function App() {
   useEffect(() => {
     let generalArray = [];
 
+    function escapeSpecialChars(htmlStr) {
+      htmlStr = htmlStr.replace(/&lt;/g, "<");
+      htmlStr = htmlStr.replace(/&gt;/g, ">");
+      htmlStr = htmlStr.replace(/&quot;/g, '"');
+      htmlStr = htmlStr.replace(/&#39;/g, "'");
+      htmlStr = htmlStr.replace(/&#039;/g, "'");
+      htmlStr = htmlStr.replace(/&amp;/g, "&");
+      return htmlStr;
+    }
+
     for (let i = 0; i < apiQuestion.length; i++) {
-      let iteratedQuestion = apiQuestion[i]?.question;
-      let iteratedAnswer = apiQuestion[i]?.correct_answer;
+      let iteratedQuestion = escapeSpecialChars(apiQuestion[i]?.question);
+      let iteratedAnswer = escapeSpecialChars(apiQuestion[i]?.correct_answer);
       let wronganswers = apiQuestion[i].incorrect_answers;
 
       let choice = [];
       for (const x of wronganswers) {
         choice.push({
-          text: x,
+          id: wronganswers.indexOf(x),
+          text: escapeSpecialChars(x),
           correct: false,
         });
       }
 
-      //shuffled options so answers won't always be at the same position
+      // Add correct option
       let unshuffledOptions = [
         ...choice,
-        { text: iteratedAnswer, correct: true },
+        { id: 3, text: iteratedAnswer, correct: true },
       ];
-
+      //shuffled options so answers won't always be at the same position
       let shuffledOptions = unshuffledOptions
         .map((value) => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
@@ -67,6 +78,7 @@ function App() {
     }
 
     setTransQuestion(generalArray);
+    console.log(generalArray);
   }, []);
 
   const moneyPyramid = useMemo(
