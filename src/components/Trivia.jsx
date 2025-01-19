@@ -12,6 +12,62 @@ import { useGetAllQuestionsQuery } from "./dataService/apiData";
 // }
 export default function Trivia() {
   const { data, isError, isLoading } = useGetAllQuestionsQuery();
+  const [transQuestion, setTransQuestion] = useState([]);
+
+  useEffect(() => {
+    let generalArray = [];
+
+    function escapeSpecialChars(htmlStr) {
+      htmlStr = htmlStr.replace(/&lt;/g, "<");
+      htmlStr = htmlStr.replace(/&gt;/g, ">");
+      htmlStr = htmlStr.replace(/&quot;/g, '"');
+      htmlStr = htmlStr.replace(/&#39;/g, "'");
+      htmlStr = htmlStr.replace(/&#039;/g, "'");
+      htmlStr = htmlStr.replace(/&amp;/g, "&");
+      return htmlStr;
+    }
+    if (data.results !== undefined) {
+      for (let i = 0; i < data.results.length; i++) {
+        let iteratedQuestion = escapeSpecialChars(data.results[i]?.question);
+        let iteratedAnswer = escapeSpecialChars(
+          data.results[i]?.correct_answer
+        );
+        let wronganswers = data.results[i].incorrect_answers;
+
+        let choice = [];
+        for (const x of wronganswers) {
+          choice.push({
+            id: wronganswers.indexOf(x),
+            text: escapeSpecialChars(x),
+            correct: false,
+          });
+        }
+
+        // Add correct option
+        let unshuffledOptions = [
+          ...choice,
+          { id: 3, text: iteratedAnswer, correct: true },
+        ];
+        //shuffled options so answers won't always be at the same position
+        let shuffledOptions = unshuffledOptions
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value);
+
+        // Add each questions
+        let item = {
+          id: `${i}`,
+          question: `${iteratedQuestion}`,
+          answers: shuffledOptions,
+        };
+
+        generalArray.push(item);
+      }
+    }
+
+    setTransQuestion(generalArray);
+    console.log(generalArray);
+  }, [data.results]);
   // const [question, setQuestion] = useState(null);
   // const [selectedAnswer, setSelectedAnswer] = useState(null);
   // const [className, setClassName] = useState("answer");
@@ -19,7 +75,7 @@ export default function Trivia() {
   // const [correctAnswer] = useSound(correct);
   // const [wrongAnswer] = useSound(wrong);
 
-  console.log(data);
+  console.log(data.results.length);
   if (isError) {
     return <h1>OOOhNoooo we got an error</h1>;
   }
@@ -65,7 +121,7 @@ export default function Trivia() {
   // });
   // };
   return (
-    <div>We are testing our app</div>
+    <div>App is ready</div>
     // <div className="trivia">
     //   <div className="question">{question?.question}</div>
     //   <div className="answers">

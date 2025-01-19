@@ -5,7 +5,7 @@ import Start from "./components/Start";
 import Timer from "./components/Timer";
 import Trivia from "./components/Trivia";
 import Testin from "./components/Testin";
-import { data } from "./components/data";
+// import { data } from "./components/data";
 import { moneyParam } from "./components/moneyParam";
 import { useGetAllQuestionsQuery } from "./components/dataService/apiData";
 
@@ -16,7 +16,6 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [earned, setEarned] = useState("$ 0");
   const [apiQuestion, setApiQuestion] = useState({});
-  const [transQuestion, setTransQuestion] = useState([]);
 
   // console.log(data);
 
@@ -33,57 +32,6 @@ function App() {
   // }, []);
 
   // //transformed fetched data
-  // useEffect(() => {
-  //   let generalArray = [];
-
-  //   function escapeSpecialChars(htmlStr) {
-  //     htmlStr = htmlStr.replace(/&lt;/g, "<");
-  //     htmlStr = htmlStr.replace(/&gt;/g, ">");
-  //     htmlStr = htmlStr.replace(/&quot;/g, '"');
-  //     htmlStr = htmlStr.replace(/&#39;/g, "'");
-  //     htmlStr = htmlStr.replace(/&#039;/g, "'");
-  //     htmlStr = htmlStr.replace(/&amp;/g, "&");
-  //     return htmlStr;
-  //   }
-
-  //   for (let i = 0; i < apiQuestion.length; i++) {
-  //     let iteratedQuestion = escapeSpecialChars(apiQuestion[i]?.question);
-  //     let iteratedAnswer = escapeSpecialChars(apiQuestion[i]?.correct_answer);
-  //     let wronganswers = apiQuestion[i].incorrect_answers;
-
-  //     let choice = [];
-  //     for (const x of wronganswers) {
-  //       choice.push({
-  //         id: wronganswers.indexOf(x),
-  //         text: escapeSpecialChars(x),
-  //         correct: false,
-  //       });
-  //     }
-
-  //     // Add correct option
-  //     let unshuffledOptions = [
-  //       ...choice,
-  //       { id: 3, text: iteratedAnswer, correct: true },
-  //     ];
-  //     //shuffled options so answers won't always be at the same position
-  //     let shuffledOptions = unshuffledOptions
-  //       .map((value) => ({ value, sort: Math.random() }))
-  //       .sort((a, b) => a.sort - b.sort)
-  //       .map(({ value }) => value);
-
-  //     // Add each questions
-  //     let item = {
-  //       id: `${i}`,
-  //       question: `${iteratedQuestion}`,
-  //       answers: shuffledOptions,
-  //     };
-
-  //     generalArray.push(item);
-  //   }
-
-  //   setTransQuestion(generalArray);
-  //   console.log(generalArray);
-  // }, []);
 
   // const moneyPyramid = useMemo(() => moneyParam, []);
 
