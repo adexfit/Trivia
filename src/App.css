@@ -236,6 +236,18 @@ body {
   color: beige;
 }
 
+.gameOver {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameOver p {
+  font-size: 3em;
+  font-weight: 300;
+  text-align: center;
+}
+
 .testing {
   /* background-color: rgb(15, 5, 70); */
   color: #140101;

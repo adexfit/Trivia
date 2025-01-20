@@ -5,10 +5,10 @@ const GameOver = ({ earned, setTimeOut }) => {
     setTimeOut(false);
   };
   return (
-    <div>
-      <div>GameOver, you earned {earned}</div>
+    <div className="gameOver">
+      <p className="gameOverText">GameOver, you earned {earned}</p>
       <br />
-      <button onClick={handleClick}>Play Again</button>
+      {/* <button onClick={handleClick}>Play Again</button> */}
     </div>
   );
 };
