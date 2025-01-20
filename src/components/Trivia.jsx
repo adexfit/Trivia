@@ -4,7 +4,6 @@ import play from "../sounds/play.mp3";
 import correct from "../sounds/correct.mp3";
 import wrong from "../sounds/wrong.mp3";
 
-// const [transQuestion, setTransQuestion] = useState([]);
 export default function Trivia({
   data,
   questionNumber,
@@ -17,10 +16,6 @@ export default function Trivia({
   const [letsPlay] = useSound(play);
   const [correctAnswer] = useSound(correct);
   const [wrongAnswer] = useSound(wrong);
-
-  if (data) {
-    console.log(data?.results);
-  }
 
   useEffect(() => {
     letsPlay();

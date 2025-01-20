@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap");
+
 html,
 body {
   max-width: 100%;
   overflow-x: hidden;
   margin: 0px;
   box-sizing: border-box;
+  font-family: "Inter", serif;
 }
 
 /* #root {
@@ -138,6 +141,45 @@ body {
 .answer.correct {
   animation: correct 3s ease forwards;
 }
+.error,
+.gameOver {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 3em;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), #020230),
+    url("../src/assets/bg.jpg") center;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  color: white;
+}
+
+.error p {
+  font-weight: 200;
+  font-size: 20px;
+  text-align: center;
+  padding: 1em;
+}
+
+.error_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: center; */
+  width: 40%;
+  margin: 0 auto;
+}
+
+.btn {
+  padding: 1em 1.5em;
+  width: 80%;
+  align-self: center;
+  outline: none;
+  cursor: pointer;
+  color: #19026b;
+  border-radius: 6px;
+}
 
 @keyframes correct {
   0%,
@@ -236,11 +278,11 @@ body {
   color: beige;
 }
 
-.gameOver {
+/* .gameOver {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .gameOver p {
   font-size: 3em;
@@ -256,10 +298,10 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  /* .app {
-    height: 100vh;
-    width: 100vw;
-  } */
+  .error_wrap {
+    width: 90%;
+  }
+
   .answer {
     width: 100%;
   }

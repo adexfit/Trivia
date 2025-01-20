@@ -3,10 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import Start from "./components/Start";
 import Timer from "./components/Timer";
 import Trivia from "./components/Trivia";
-// import Testin from "./components/Testin";
 import { moneyParam } from "./components/moneyParam";
 import { useGetAllQuestionsQuery } from "./components/dataService/apiData";
 import GameOver from "./components/GameOver";
+import load from "./assets/load.gif";
+import { escapeSpecialChars } from "./components/function";
+import ErrorPage from "./components/ErrorPage";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const { data, isError, isLoading } = useGetAllQuestionsQuery();
@@ -19,15 +22,6 @@ function App() {
   useEffect(() => {
     let generalArray = [];
 
-    function escapeSpecialChars(htmlStr) {
-      htmlStr = htmlStr.replace(/&lt;/g, "<");
-      htmlStr = htmlStr.replace(/&gt;/g, ">");
-      htmlStr = htmlStr.replace(/&quot;/g, '"');
-      htmlStr = htmlStr.replace(/&#39;/g, "'");
-      htmlStr = htmlStr.replace(/&#039;/g, "'");
-      htmlStr = htmlStr.replace(/&amp;/g, "&");
-      return htmlStr;
-    }
     if (data) {
       for (let i = 0; i < data.results.length; i++) {
         let iteratedQuestion = escapeSpecialChars(data.results[i]?.question);
@@ -68,7 +62,6 @@ function App() {
     }
 
     setQuestion(generalArray);
-    // console.log(generalArray);
   }, [data]);
 
   //money pyramid
@@ -79,15 +72,22 @@ function App() {
   }, [questionNumber, moneyPyramid]);
 
   if (isLoading) {
-    return <h1>Loading your questions...</h1>;
+    return (
+      <div className="error">
+        <img src={load} alt="Loading..." />
+      </div>
+    );
   }
 
   if (isError) {
-    return <h1>OOOhNoooo we got an error</h1>;
+    return <ErrorPage />;
   }
 
   if (data) {
     console.log(question);
+    <Routes>
+      <Route path="/" element={<Start />} />
+    </Routes>;
   }
 
   return (
