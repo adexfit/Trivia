@@ -74,7 +74,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="error">
-        <img src={load} alt="Loading..." />
+        <img src={load} alt="Loading..." width={200} />
       </div>
     );
   }
