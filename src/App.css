@@ -135,17 +135,17 @@ body {
 
 .answer:hover,
 .answer.active {
-  background: mediumblue;
+  /* background: mediumblue; */
 }
 
 .answer.correct {
-  animation: correct 3s ease forwards;
+  animation: correct 1s ease forwards;
 }
 .error,
 .gameOver {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 3em;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), #020230),
     url("../src/assets/bg.jpg") center;
@@ -160,7 +160,7 @@ body {
 }
 
 .error p {
-  font-weight: 200;
+  font-weight: 500;
   font-size: 20px;
   text-align: center;
   padding: 1em;
@@ -225,6 +225,43 @@ body {
     background: crimson;
   }
 }
+/* @keyframes correct {
+  0%,
+  22%,
+  42% {
+    background: mediumblue;
+  }
+  20%,
+  40%,
+  60% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  62%,
+  100% {
+    background: green;
+  }
+}
+
+.answer.wrong {
+  animation: wrong 3s ease forwards;
+}
+
+@keyframes wrong {
+  0%,
+  22%,
+  42% {
+    background: mediumblue;
+  }
+  20%,
+  40%,
+  60% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  62%,
+  100% {
+    background: crimson;
+  }
+} */
 
 .endText {
   position: relative;

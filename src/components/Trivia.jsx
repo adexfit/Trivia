@@ -3,6 +3,7 @@ import useSound from "use-sound";
 import play from "../sounds/play.mp3";
 import correct from "../sounds/correct.mp3";
 import wrong from "../sounds/wrong.mp3";
+import GameOver from "./GameOver";
 
 export default function Trivia({
   data,
@@ -34,16 +35,20 @@ export default function Trivia({
   const handleClick = (a) => {
     setSelectedAnswer(a);
     setClassName("answer active");
-    delay(3000, () => {
+    delay(1000, () => {
       setClassName(a.correct ? "answer correct" : "answer wrong");
     });
 
-    delay(5000, () => {
+    delay(4000, () => {
       if (a.correct) {
         correctAnswer();
         delay(1000, () => {
-          setQuestionNumber((prev) => prev + 1);
-          setSelectedAnswer(null);
+          if (question.question == "") {
+            setTimeOut(true);
+          } else {
+            setQuestionNumber((prev) => prev + 1);
+            setSelectedAnswer(null);
+          }
         });
       } else {
         wrongAnswer();

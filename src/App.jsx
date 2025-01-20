@@ -85,6 +85,8 @@ function App() {
 
   if (data) {
     console.log(question);
+    console.log(question.length);
+    console.log(questionNumber);
     <Routes>
       <Route path="/" element={<Start />} />
     </Routes>;
