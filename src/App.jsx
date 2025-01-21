@@ -74,7 +74,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="error">
-        <img src={load} alt="Loading..." width={200} />
+        <img src={load} alt="Loading..." width={80} />
       </div>
     );
   }
@@ -85,8 +85,8 @@ function App() {
 
   if (data) {
     console.log(question);
-    console.log(question.length);
-    console.log(questionNumber);
+    // console.log(question.length);
+    // console.log(questionNumber);
     <Routes>
       <Route path="/" element={<Start />} />
     </Routes>;
@@ -99,11 +99,12 @@ function App() {
       ) : (
         <>
           <div className="main">
-            {timeOut ? (
+            {timeOut || questionNumber > question?.length ? (
               <GameOver earned={earned} setTimeOut={setTimeOut} />
             ) : (
               <>
                 <div className="top">
+                  <p>Current Earnings: {earned}</p>
                   <div className="timer">
                     <Timer
                       setTimeOut={setTimeOut}

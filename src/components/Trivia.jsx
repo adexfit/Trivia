@@ -43,12 +43,12 @@ export default function Trivia({
       if (a.correct) {
         correctAnswer();
         delay(1000, () => {
-          if (question.question == "") {
-            setTimeOut(true);
-          } else {
-            setQuestionNumber((prev) => prev + 1);
-            setSelectedAnswer(null);
-          }
+          // if (questionNumber == question?.length) {
+          //   setTimeOut(true);
+          // }
+          setQuestionNumber((prev) => prev + 1);
+
+          setSelectedAnswer(null);
         });
       } else {
         wrongAnswer();
@@ -56,6 +56,7 @@ export default function Trivia({
           setTimeOut(true);
         });
       }
+      // console.log(question?.length);
     });
   };
   return (
