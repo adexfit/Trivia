@@ -5,7 +5,7 @@ export const questionApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://opentdb.com" }),
   endpoints: (builder) => ({
     getAllQuestions: builder.query({
-      query: () => "/api.php?amount=3&category=21",
+      query: () => "/api.php?amount=15&category=17&type=multiple",
     }),
   }),
 });
