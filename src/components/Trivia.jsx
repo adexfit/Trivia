@@ -55,7 +55,7 @@ export default function Trivia({
       } else {
         wrongAnswer();
         setShowAnswer(true);
-        delay(1000, () => {
+        delay(5000, () => {
           setTimeOut(true);
         });
       }
