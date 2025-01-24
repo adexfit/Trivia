@@ -7,6 +7,7 @@ import { moneyParam } from "./components/moneyParam";
 import { useGetAllQuestionsQuery } from "./components/dataService/apiData";
 import GameOver from "./components/GameOver";
 import load from "./assets/load.gif";
+
 import { escapeSpecialChars } from "./components/function";
 import ErrorPage from "./components/ErrorPage";
 import { Routes, Route } from "react-router-dom";
@@ -99,7 +100,7 @@ function App() {
       ) : (
         <>
           <div className="main">
-            {false || questionNumber > question?.length ? ( //timeOut
+            {timeOut || questionNumber > question?.length ? (
               <GameOver earned={earned} setTimeOut={setTimeOut} />
             ) : (
               <>

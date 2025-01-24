@@ -4,6 +4,7 @@ import play from "../sounds/play.mp3";
 import correct from "../sounds/correct.mp3";
 import wrong from "../sounds/wrong.mp3";
 import GameOver from "./GameOver";
+import rightans from "../assets/rightans.png";
 
 export default function Trivia({
   data,
@@ -17,6 +18,7 @@ export default function Trivia({
   const [letsPlay] = useSound(play);
   const [correctAnswer] = useSound(correct);
   const [wrongAnswer] = useSound(wrong);
+  const [ShowAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
     letsPlay();
@@ -52,6 +54,7 @@ export default function Trivia({
         });
       } else {
         wrongAnswer();
+        setShowAnswer(true);
         delay(1000, () => {
           setTimeOut(true);
         });
@@ -72,6 +75,16 @@ export default function Trivia({
             onClick={() => !selectedAnswer && handleClick(a)}
           >
             {a.text}
+            <img
+              src={rightans}
+              alt=""
+              className="rightans"
+              style={
+                ShowAnswer && a.correct
+                  ? { display: "flex" }
+                  : { display: "none" }
+              }
+            />
           </div>
         ))}
       </div>
