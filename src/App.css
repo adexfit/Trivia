@@ -29,8 +29,8 @@ body {
 
 .main {
   width: 75%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
-    url("../src/assets/bg.jpg") center;
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
+    url("../src/assets/bg.jpg") center; */
   display: flex;
   flex-direction: column;
 }
@@ -362,6 +362,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column-reverse;
+    padding-bottom: 0.5em;
+  }
+
+  .timer {
+    position: relative;
+    left: 0;
+    bottom: 0;
   }
 
   .moneyList {

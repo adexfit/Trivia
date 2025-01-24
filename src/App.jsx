@@ -99,7 +99,7 @@ function App() {
       ) : (
         <>
           <div className="main">
-            {timeOut || questionNumber > question?.length ? (
+            {false || questionNumber > question?.length ? ( //timeOut
               <GameOver earned={earned} setTimeOut={setTimeOut} />
             ) : (
               <>
