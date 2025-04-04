@@ -1,11 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useContext, useState } from "react";
 import smiley from "../assets/smiley.gif";
+import { UserContext } from "../context/UserContext";
 
-export default function Start({ setUsername }) {
+export default function Start() {
+  const { username, setUsername, setShowHomeScreen, setTimeOut } =
+    useContext(UserContext);
+  const [myname, setMyName] = useState(username);
   const inputRef = useRef();
 
-  const handleClick = () => {
-    inputRef.current.value && setUsername(inputRef.current.value);
+  // console.log(myname);
+  // console.log(username);
+
+  const handleStart = () => {
+    if (myname != "" && myname.length > 2) {
+      setUsername(myname);
+      setShowHomeScreen(false);
+      setTimeOut(false);
+    }
+  };
+  const handleChange = (e) => {
+    e.preventDefault();
+    setMyName(e.target.value);
   };
 
   return (
@@ -21,9 +36,11 @@ export default function Start({ setUsername }) {
           className="startInput"
           placeholder="Enter your name"
           ref={inputRef}
+          value={myname}
+          onChange={handleChange}
         />{" "}
         <br />
-        <button className="startButton" onClick={handleClick}>
+        <button className="startButton" onClick={handleStart}>
           Start
         </button>
       </div>

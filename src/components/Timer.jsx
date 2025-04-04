@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
-export default function Timer({ setTimeOut, questionNumber }) {
+export default function Timer() {
+  const { setTimeOut, questionNumber } = useContext(UserContext);
   const [timer, setTimer] = useState(30);
 
   useEffect(() => {

@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useSound from "use-sound";
 import play from "../sounds/play.mp3";
 import correct from "../sounds/correct.mp3";
 import wrong from "../sounds/wrong.mp3";
-import GameOver from "./GameOver";
+// import GameOver from "./GameOver";
 import rightans from "../assets/rightans.png";
+import { UserContext } from "../context/UserContext";
 
-export default function Trivia({
-  data,
-  questionNumber,
-  setQuestionNumber,
-  setTimeOut,
-}) {
+export default function Trivia({ data }) {
+  const { setTimeOut, questionNumber, setQuestionNumber } =
+    useContext(UserContext);
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [className, setClassName] = useState("answer");

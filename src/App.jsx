@@ -1,35 +1,62 @@
 import "./App.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import Start from "./components/Start";
 import Timer from "./components/Timer";
 import Trivia from "./components/Trivia";
 import { moneyParam } from "./components/moneyParam";
-import { useGetAllQuestionsQuery } from "./components/dataService/apiData";
+import { useGetAllQuestionsQuery } from "./dataService/apiData";
 import GameOver from "./components/GameOver";
 import load from "./assets/load.gif";
-
 import { escapeSpecialChars } from "./components/function";
 import ErrorPage from "./components/ErrorPage";
 import { Routes, Route } from "react-router-dom";
+import { UserContext } from "./context/UserContext";
 
 function App() {
-  const { data, isError, isLoading } = useGetAllQuestionsQuery();
-  const [username, setUsername] = useState(null);
-  const [timeOut, setTimeOut] = useState(false);
-  const [questionNumber, setQuestionNumber] = useState(1);
-  const [earned, setEarned] = useState("$ 0");
+  const {
+    username,
+    setUsername,
+    showHomeScreen,
+    setShowHomeScreen,
+    timeOut,
+    setTimeOut,
+    questionNumber,
+    setQuestionNumber,
+    earned,
+    setEarned,
+    newTriviaRound,
+  } = useContext(UserContext);
+  // const { data, isError, isLoading } = useGetAllQuestionsQuery();
   const [question, setQuestion] = useState(null);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let generalArray = [];
+    fetch("https://opentdb.com/api.php?amount=15&category=17&type=multiple") //
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
 
     if (data) {
-      for (let i = 0; i < data.results.length; i++) {
-        let iteratedQuestion = escapeSpecialChars(data.results[i]?.question);
+      for (let i = 0; i < data?.results?.length; i++) {
+        let iteratedQuestion = escapeSpecialChars(data?.results[i]?.question);
         let iteratedAnswer = escapeSpecialChars(
-          data.results[i]?.correct_answer
+          data?.results[i]?.correct_answer
         );
-        let wronganswers = data.results[i].incorrect_answers;
+        let wronganswers = data?.results[i].incorrect_answers;
 
         let choice = [];
         for (const x of wronganswers) {
@@ -63,7 +90,7 @@ function App() {
     }
 
     setQuestion(generalArray);
-  }, [data]);
+  }, [newTriviaRound]);
 
   //money pyramid
   const moneyPyramid = useMemo(() => moneyParam, []);
@@ -80,12 +107,12 @@ function App() {
     );
   }
 
-  if (isError) {
+  if (error) {
     return <ErrorPage />;
   }
 
   if (data) {
-    console.log(question);
+    // console.log(question);
     // console.log(question.length);
     // console.log(questionNumber);
     <Routes>
@@ -95,31 +122,23 @@ function App() {
 
   return (
     <div className="app">
-      {!username ? (
-        <Start setUsername={setUsername} />
+      {showHomeScreen ? (
+        <Start />
       ) : (
         <>
           <div className="main">
             {timeOut || questionNumber > question?.length ? (
-              <GameOver earned={earned} setTimeOut={setTimeOut} />
+              <GameOver />
             ) : (
               <>
                 <div className="top">
                   <p>Current Earnings: {earned}</p>
                   <div className="timer">
-                    <Timer
-                      setTimeOut={setTimeOut}
-                      questionNumber={questionNumber}
-                    />
+                    <Timer />
                   </div>
                 </div>
                 <div className="bottom">
-                  <Trivia
-                    data={question}
-                    questionNumber={questionNumber}
-                    setQuestionNumber={setQuestionNumber}
-                    setTimeOut={setTimeOut}
-                  />
+                  <Trivia data={question} />
                 </div>
               </>
             )}

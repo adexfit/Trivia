@@ -3,11 +3,14 @@ import App from "./App.jsx";
 import { store } from "./components/store.js";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from "./context/UserContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </BrowserRouter>
   </Provider>
 );
