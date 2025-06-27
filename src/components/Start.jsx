@@ -5,18 +5,20 @@ import { UserContext } from "../context/UserContext";
 export default function Start() {
   const { username, setUsername, setShowHomeScreen, setTimeOut } =
     useContext(UserContext);
-  const [myname, setMyName] = useState(username);
+  const [myname, setMyName] = useState("");
   const inputRef = useRef();
 
-  // console.log(myname);
+  // console.log(myname.username);
   // console.log(username);
 
   const handleStart = () => {
-    if (myname != "" && myname.length > 2) {
+    if (myname != "" && myname != null) {
+      // && myname?.length > 2
       setUsername(myname);
       setShowHomeScreen(false);
       setTimeOut(false);
     }
+    // console.log(myname);
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -40,9 +42,11 @@ export default function Start() {
           onChange={handleChange}
         />{" "}
         <br />
-        <button className="startButton" onClick={handleStart}>
-          Start
-        </button>
+        {myname && (
+          <button className="startButton" onClick={handleStart}>
+            Start
+          </button>
+        )}
       </div>
     </div>
   );

@@ -12,12 +12,15 @@ const GameOver = () => {
     setQuestionNumber,
     setNewTriviaRound,
   } = useContext(UserContext);
+
   const handleNewGame = () => {
     setShowHomeScreen(true);
     setEarned("$ 0");
     setQuestionNumber(1);
     setNewTriviaRound((prev) => prev + 1);
+    setTimeOut(false);
   };
+
   return (
     <div className="error">
       <div className="error_wrap">

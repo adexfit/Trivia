@@ -32,6 +32,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log(timeOut);
+
   useEffect(() => {
     let generalArray = [];
     fetch("https://opentdb.com/api.php?amount=15&category=17&type=multiple") //
@@ -127,7 +129,7 @@ function App() {
       ) : (
         <>
           <div className="main">
-            {timeOut || questionNumber > question?.length ? (
+            {timeOut ? ( //|| questionNumber > question?.length
               <GameOver />
             ) : (
               <>
